@@ -2,6 +2,7 @@
 from pathlib import Path
 from shutil import copyfile
 import sys
+import os
 
 
 def read_folder(path: Path) -> None:
@@ -13,6 +14,9 @@ def read_folder(path: Path) -> None:
 
 
 def copy_file(file: Path) -> None:
+    if not os.access(file, os.R_OK):
+        print(f'No Read permission -> {file}')
+        return
     ext = file.suffix
     new_path = output_folder / ext
     new_path.mkdir(exist_ok=True, parents=True)
